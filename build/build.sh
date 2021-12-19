@@ -1,5 +1,5 @@
 #!/bin/bash
-. .env
+source .env
 stamp=$(date '+%Y%m%d%H%M')
 echo "docker build $IMAGENAME"
 docker build --squash  -t $IMAGENAME .
