@@ -1,4 +1,4 @@
-# pmwiki
+# pmwiki 2.2.x
 an ubuntu 20.04LTS based self made docker Version of pmwiki. Latest Version of pmwiki see here: https://www.pmwiki.org/pub/pmwiki/?C=M;O=D 
 
 all security patches included. All layers are squashed, to reduce size and false positive scan results of vulnerabilitiy tools.
