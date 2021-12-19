@@ -6,7 +6,7 @@ all security patches included. All layers are squashed, to reduce size and false
 ## Base Environment
 
 ```
-ENV TZ=Europe/Berlin 
+TZ=Europe/Berlin 
 LANG=C.UTF-8 
 ```
 
