@@ -3,7 +3,12 @@ an ubuntu 20.04LTS based self made docker Version of pmwiki. Latest Version of p
 
 all security patches included. All layers are squashed, to reduce size and false positive scan results of vulnerabilitiy tools.
 
+## Base Environment
 
+```
+ENV TZ=Europe/Berlin 
+LANG=C.UTF-8 
+```
 
 # run
 ```
