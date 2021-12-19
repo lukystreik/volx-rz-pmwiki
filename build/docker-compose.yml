@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  volx-rz-pmwiki:
+    image: lukystreik/volx-rz-pmwiki:latest
+    volumes:
+      - "./selbstdoku-pmwiki/wiki.d:/var/www/html/wiki.d"
+      - "./selbstdoku-pmwiki/cookbook:/var/www/html/cookbook"
+      - "./selbstdoku-pmwiki/pub:/var/www/html/pub"
+      - "./selbstdoku-pmwiki/local:/var/www/html/local"
+      - "./selbstdoku-pmwiki/uploads:/var/www/html/uploads"
+    ports:
+      - "33380:80"  # expose 33380
+

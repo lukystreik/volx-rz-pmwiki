@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  volx-rz-pmwiki:
+    #container_name: lukystreik/volx-rz-pmwiki:latest
+    image: lukystreik/volx-rz-pmwiki:latest
+    volumes:
+      - "./selbstdoku-pmwiki/wiki.d:/var/www/html/wiki.d"
+      - "./selbstdoku-pmwiki/cookbook:/var/www/html/cookbook"
+      - "./selbstdoku-pmwiki/pub:/var/www/html/pub"
+      - "./selbstdoku-pmwiki/local:/var/www/html/local"
+      - "./selbstdoku-pmwiki/uploads:/var/www/html/uploads"
+      - "./selbstdoku-pmwiki/user_stuff:/var/www/html/user_stuff"
+      - "./selbstdoku-pmwiki/favicon.ico:/var/www/html/favicon.ico"
+      - "./selbstdoku-pmwiki/sitemap.xml:/var/www/html/sitemap.xml"
+    ports:
+      - "33380:80"  # expose 33380
+    environment:
+      BASEURL: "https://audi100.selbst-doku.de"
+
+
