@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   volx-rz-pmwiki:
-    image: lukystreik/volx-rz-pmwiki:latest
+    image: "lukystreik/volx-rz-pmwiki:latest"
     volumes:
       - "./selbstdoku-pmwiki/wiki.d:/var/www/html/wiki.d"
       - "./selbstdoku-pmwiki/cookbook:/var/www/html/cookbook"
