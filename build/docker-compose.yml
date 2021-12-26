@@ -11,6 +11,7 @@ services:
       - "./selbstdoku-pmwiki/uploads:/var/www/html/uploads"
       - "./var_www_html_inserts/favicon.ico:/var/www/html/favicon.ico"
       - "./var_www_html_inserts/apple-touch-icon.png:/var/www/html/apple-touch-icon.png"
+      - "./var_www_html_inserts/robots.txt:/var/www/html/robots.txt"
     ports:
       - "33380:80"  # expose 33380
 
