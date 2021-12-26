@@ -14,7 +14,7 @@ RUN apt-get update ; apt-get install -y --no-install-recommends ca-certificates 
     bash -c 'echo -e "#!/bin/bash\nexec /usr/sbin/rsyslogd -n" > /etc/service/syslog/run' ;\
     bash -c 'echo -e "#!/bin/bash\nexec /usr/sbin/cron -f" > /etc/service/cron/run' ;\
     bash -c 'echo -e "#!/bin/bash\nexec /usr/sbin/php-fpm7.4 --nodaemonize --fpm-config /etc/php/7.4/fpm/php-fpm.conf" > /etc/service/php/run' ; \
-    bash -c 'echo -e "#!/bin/bash\nexec /usr/sbin/nginx -g \"daemon off;\"" > /etc/service/nginx/run' ; \
+    bash -c 'echo -e "#!/bin/bash\nexec /usr/sbin/nginx -g \"daemon off;\" --with-http_realip_module" > /etc/service/nginx/run' ; \
     chmod 755 /etc/service/cron/run /etc/service/syslog/run /etc/service/php/run /etc/service/nginx/run ;\
     wget -P /tmp http://www.pmwiki.org/pub/pmwiki/pmwiki-latest.tgz http://pmwiki.org/pub/pmwiki/i18n/i18n-all.zip ;\
     tar zxfv /tmp/pmwiki-latest.tgz -C /var/www/html/ --strip-components 1 ;\
