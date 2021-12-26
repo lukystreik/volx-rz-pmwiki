@@ -24,6 +24,8 @@ RUN apt-get update ; apt-get install -y --no-install-recommends ca-certificates 
     apt-get clean  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD default.conf /etc/nginx/sites-enabled/default
+#overwrite default.conf to ensure logging to stdout for docker env
+ADD rsyslog-stdout.conf /etc/rsyslog.d/default.conf
 
 EXPOSE 80/tcp 443/tcp
 
