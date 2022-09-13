@@ -27,11 +27,13 @@ jobs:
     env:
       version: latest1
     steps:
-      - name: get latest pmwiki version number
+      - 
+        name: get latest pmwiki version number
         run: wget --quiet http://www.pmwiki.org/pub/pmwiki/ -O- 2>/dev/null |grep pmwiki-|egrep -v 'zip|patch|md5|latest'|sed -e 's/.*pmwiki-//' -e 's/<\/a.*//' -e 's/.tgz.*//'|sort -V|tail -1 > ./VERSION
         shell: bash
-      - name: pmwiki Version 
-        run: {{ env.version }} = cat ./VERSION
+      - 
+        name: pmwiki Version 
+        run: ${{ env.version }} = cat ./VERSION
         shell: bash
       -
         name: Checkout
