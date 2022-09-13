@@ -29,6 +29,7 @@ jobs:
         shell: bash
       - name: pmwiki Version $VERSION
         run: echo "Hallo $VERSION"
+        shell: bash
         
   docker-job:
     runs-on: ubuntu-latest
