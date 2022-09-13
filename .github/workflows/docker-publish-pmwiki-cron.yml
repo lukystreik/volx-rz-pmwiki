@@ -57,7 +57,7 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value={{ env.version }}
+            type=raw,value=${{ env.version }},enable=true
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
