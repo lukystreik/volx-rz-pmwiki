@@ -33,7 +33,7 @@ jobs:
         shell: bash
       - 
         name: pmwiki Version 
-        run: {{ env.version }} = cat ./VERSION
+        run: cat ./VERSION >> ${{ env.version }}
         shell: bash
       -
         name: Checkout
