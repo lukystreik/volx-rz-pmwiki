@@ -23,6 +23,7 @@ on:
 jobs:
 
   getpmwiki-version-job:
+    runs-on: ubuntu-latest
     steps:
       - name: get latest pmwiki Version
         run: ./.github/scripts/get-pmwiki-version.sh
