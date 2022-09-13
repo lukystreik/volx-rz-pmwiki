@@ -28,6 +28,7 @@ jobs:
         run: ./.github/scripts/get-pmwiki-version.sh
         shell: bash
       - name: pmwiki Version $VERSION
+        run: echo "Hallo $VERSION"
         
   docker-job:
     runs-on: ubuntu-latest
