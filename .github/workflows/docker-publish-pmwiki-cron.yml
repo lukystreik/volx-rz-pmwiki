@@ -50,14 +50,14 @@ jobs:
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule,pattern={{date 'YYYYMMDD'}}
-            type=ref,event=branch
-            type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=sha
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=${{ env.version }},enable=true
+            #generiert grundsaetzlich eine sha Version type=sha
+            #baut version nach branch namen type=ref,event=branch
+            #baut version nach pull request namen type=ref,event=pr
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
