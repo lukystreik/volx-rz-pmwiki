@@ -15,5 +15,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build --squash ./build --file Dockerfile --tag volx-rz-pmwiki:$(date +%s)
+      run: docker build  ./build --file Dockerfile --tag volx-rz-pmwiki:$(date +%s)
       
