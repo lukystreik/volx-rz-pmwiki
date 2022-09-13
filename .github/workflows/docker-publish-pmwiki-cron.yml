@@ -19,10 +19,10 @@ on:
   pull_request:
     branches:
       - 'main'
-  ENV:
-    VERSION: latest1
 
 jobs:
+  ENV:
+    VERSION: latest1
 
   getpmwiki-version-job:
     runs-on: ubuntu-latest
