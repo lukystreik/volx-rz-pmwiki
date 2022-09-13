@@ -26,13 +26,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get latest pmwiki Version
-        run: ./.github/scripts/get-pmwiki-version.sh
+        run: /.github/scripts/get-pmwiki-version.sh
         shell: bash
       - name: pmwiki Version $VERSION
         run: echo "Hallo $VERSION"
         shell: bash
         
   docker-job:
+    needs: getpmwiki-version-job
     runs-on: ubuntu-latest
     steps:
       -
