@@ -33,7 +33,7 @@ jobs:
         shell: bash
       - 
         name: pmwiki Version 
-        run: ${{ env.version }} = cat ./VERSION
+        run: {{ env.version }} = cat ./VERSION
         shell: bash
       -
         name: Checkout
@@ -58,6 +58,7 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value={{ env.version }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
