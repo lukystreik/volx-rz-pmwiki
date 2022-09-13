@@ -24,8 +24,7 @@ jobs:
 
   docker-job:
     runs-on: ubuntu-latest
-    env:
-      version: latest1
+  
     steps:
       - 
         name: get latest pmwiki version number
