@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get latest pmwiki Version
-        run: sh ./.github/scripts/get-pmwiki-version.sh
+        run: sh /volx-rz-pmwiki/.github/scripts/get-pmwiki-version.sh
         shell: bash
       - name: pmwiki Version $VERSION
         run: echo "Hallo $VERSION"
