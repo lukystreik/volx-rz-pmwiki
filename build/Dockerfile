@@ -2,7 +2,7 @@ FROM ubuntu:20.04 as ubuntu-20.04
 
 ENV TZ=Europe/Berlin LANG=C.UTF-8 DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update ; apt-get install -y --no-install-recommends ca-certificates wget apt-transport-https tzdata \
+RUN apt-get update ; apt-get install -y --no-install-recommends ca-certificates wget apt-transport-https nginx-extras tzdata \
     dumb-init vim-tiny unzip gosu fonts-dejavu-core  \
     jq mtr-tiny dnsutils psmisc \
     cron logrotate runit rsyslog-kafka gosu bsdiff libtcnative-1 libjemalloc-dev nginx php-fpm ; \
