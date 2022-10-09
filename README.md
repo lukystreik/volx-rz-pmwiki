@@ -11,7 +11,7 @@ I made a docker container version the pmwiki application based on ubuntu:latest 
 # pmwiki 2.x.x / Ubuntu latest docker image building
 A github action creates an ubuntu latest based docker version of the wiki and pushes it to dockerhub on a regular basis.
 
-##Benefits of the volx-rz-pmwiki
+## Benefits of the volx-rz-pmwiki
 * hardened nginx with security header included
 * all current pmwiki and ubuntu security patches included. 
 * low servity level on the final image (no critical CVEs)
