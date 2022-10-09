@@ -8,7 +8,7 @@ I made a docker container version the pmwiki application based on ubuntu:latest 
 * My dockerhub repository for pmwiki: https://hub.docker.com/repository/docker/lukystreik/volx-rz-pmwiki
 
 
-# pmwiki 2.x.x / Ubuntu latest
+# pmwiki 2.x.x / Ubuntu latest docker image building
 A github action creates an ubuntu latest based docker version of the wiki and pushes it to dockerhub on a regular basis.
 
 ##Benefits of the volx-rz-pmwiki
@@ -17,32 +17,35 @@ A github action creates an ubuntu latest based docker version of the wiki and pu
 * low servity level on the final image (no critical CVEs)
 * Layer sqashing if possible in the CI environment (docker build experimental feature has to be enabled) to reduce the container size and false positive scan results of vulnerabilitiy tools. 
 
-## automatic build with github action
+## The github CI pipeline 
+###automatic build with github action
 
 automatic build every month with github action script
 
 scripts are located in .github subdir
 
-### Using the image for your own
-## docker runtime base environment
+# Container runtime usage
+## how to use it
+### docker runtime base environment
+You should set the timezone ENV in your deployment (docker-compose or sth. else).
 
 ```
 TZ=Europe/Berlin 
 LANG=C.UTF-8 
 ```
 
-## run
+### run
 ```
 mkdir -p wiki.d
 chown 33:33 -R wiki.d
 docker-compose -d 
 ```
 
-## browser
+### browser
 open http://x.x.x.x:33380
 
 
-## sample docker-compose.yml
+### sample docker-compose.yml
 
 ```
 version: '3'
@@ -61,7 +64,7 @@ services:
 ```
 
 
-## convert files from prev. 1.x pmwiki Version from iso-8859-1 to utf-8
+### convert files from prev. 1.x pmwiki Version from iso-8859-1 to utf-8
 
 ```
 apt-get update && apt-get install convmv
