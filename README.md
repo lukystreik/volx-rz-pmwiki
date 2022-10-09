@@ -1,18 +1,21 @@
 # pmwiki Dockerfile and build pipeline 
 
-to dockerize the pmwiki application in an ubuntu:latest OCI container
+I made a docker container version the pmwiki application based on ubuntu:latest OCI container
 
-Homepage of the wiki vendor https://www.pmwiki.org/wiki/PmWiki/Download
+* Homepage of the pmwiki source https://www.pmwiki.org/wiki/PmWiki/Download
+* Latest Version of pmwiki see here: https://www.pmwiki.org/pub/pmwiki/?C=M;O=D 
 
-dockerhub repository for pmwiki: https://hub.docker.com/repository/docker/lukystreik/volx-rz-pmwiki
+* My dockerhub repository for pmwiki: https://hub.docker.com/repository/docker/lukystreik/volx-rz-pmwiki
 
 
 # pmwiki 2.x.x / Ubuntu latest
-generate an ubuntu latest based self made docker Version of pmwiki. Latest Version of pmwiki see here: https://www.pmwiki.org/pub/pmwiki/?C=M;O=D 
+A github action creates an ubuntu latest based docker version of the wiki and pushes it to dockerhub on a regular basis.
 
-all current security patches included. 
-Layer sqashing as possible to reduce size and false positive scan results of vulnerabilitiy tools. If you want to squash on docker build, you have to enable the experimental feature of docker in your build environment
-
+##Benefits of the volx-rz-pmwiki
+* hardened nginx with security header included
+* all current pmwiki and ubuntu security patches included. 
+* low servity level on the final image (no critical CVEs)
+* Layer sqashing if possible in the CI environment (docker build experimental feature has to be enabled) to reduce the container size and false positive scan results of vulnerabilitiy tools. 
 
 ## automatic build with github action
 
@@ -20,6 +23,7 @@ automatic build every month with github action script
 
 scripts are located in .github subdir
 
+### Using the image for your own
 ## docker runtime base environment
 
 ```
@@ -27,18 +31,18 @@ TZ=Europe/Berlin
 LANG=C.UTF-8 
 ```
 
-# run
+## run
 ```
 mkdir -p wiki.d
 chown 33:33 -R wiki.d
 docker-compose -d 
 ```
 
-# browser
+## browser
 open http://x.x.x.x:33380
 
 
-# sample docker-compose.yml
+## sample docker-compose.yml
 
 ```
 version: '3'
@@ -57,7 +61,7 @@ services:
 ```
 
 
-# convert files from prev. 1.x pmwiki Version from iso-8859-1 to utf-8
+## convert files from prev. 1.x pmwiki Version from iso-8859-1 to utf-8
 
 ```
 apt-get update && apt-get install convmv
