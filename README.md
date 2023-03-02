@@ -18,6 +18,7 @@ special builds for a specific version can be found on dockerhub lukystreik/volx-
 |---|---|
 |2.3.18|15.01.2023|
 |2.3.17|31.12.2022|
+|2.3.20|01.03.2023|
 |---|---|
 
 ## Benefits of the volx-rz-pmwiki
