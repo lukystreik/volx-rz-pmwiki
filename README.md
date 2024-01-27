@@ -2,6 +2,12 @@
 
 I made a docker container version the pmwiki application based on ubuntu:latest OCI container
 
+## status
+  
+[![Docker-build-pmwiki-cron](https://github.com/lukystreik/volx-rz-pmwiki/actions/workflows/docker-publish-pmwiki-cron.yml/badge.svg)](https://github.com/lukystreik/volx-rz-pmwiki/actions/workflows/docker-publish-pmwiki-cron.yml)
+
+## project links of pmwiki
+
 * Homepage of the pmwiki source https://www.pmwiki.org/wiki/PmWiki/Download
 * Latest Version of pmwiki see here: https://www.pmwiki.org/pub/pmwiki/?C=M;O=D 
 
