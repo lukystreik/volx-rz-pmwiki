@@ -7,8 +7,8 @@ name: Docker-build-pmwiki-cron
 
 on:
   schedule:
-    # am 10. jeden Monats  um 8:37 laufen lassen (normalerweise releast pmwiki zwischen 2.-6. eines Monats
-    - cron: '37 8 10 * *'
+    # am 24. jeden Monats  um 8:37 laufen lassen (normalerweise releast pmwiki zwischen 2.-6. eines Monats
+    - cron: '37 8 24 * *'
 
 
   push:
