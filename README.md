@@ -23,6 +23,8 @@ special builds for a specific version can be found on dockerhub lukystreik/volx-
 
 | Version | Date |
 | :---- | :-------- |
+| 2.3.32 | 23.03.2024 |
+| 2.3.31 | 23.02.2024 |
 | 2.3.30 | 22.01.2024 |
 | 2.3.27 | 23.10.2023 |
 | 2.3.26 | 28.09.2023 |
