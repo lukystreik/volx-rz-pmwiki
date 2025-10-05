@@ -1,6 +1,8 @@
 # pmwiki Dockerfile and build pipeline 
 
-I made a docker container version the pmwiki application based on ubuntu:latest OCI container
+docker container implementation of the pmwiki application
+
+based on ubuntu:latest OCI container
 
 ## status
   
