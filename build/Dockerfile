@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates wget apt-transport-https tzdata \
     nginx-extras dumb-init vim unzip gosu fonts-dejavu-core curl \
     jq mtr-tiny dnsutils psmisc \
-    cron logrotate runit rsyslog gosu bsdiff libtcnative-1 \
+    cron logrotate rsyslog gosu bsdiff libtcnative-1 \
     php7.4-fpm php7.4-cli php7.4-mbstring php7.4-curl php7.4-xml php7.4-gd php7.4-mysql php7.4-zip php7.4-intl \
     && rm -rf /var/lib/apt/lists/*
 
