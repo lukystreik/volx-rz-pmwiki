@@ -5,13 +5,14 @@ BASEDIR=.
 
 source .env
 
+DOCKERCOMPOSE=/usr/local/bin/docker-compose
+
 case $1 in 
 
 start)
 	cd ${BASEDIR}
 	echo "starting $IMAGENAME environment container...."
-	docker-compose pull
-	docker-compose up -d 
+	$DOCKERCOMPOSE up -d 
 	echo ""
 	sleep 5
 	docker ps|grep $COMPOSE_PROJECT_NAME
@@ -19,28 +20,28 @@ start)
 stop)
         cd ${BASEDIR}
         echo "stopping environment container...."
-        docker-compose down
+        $DOCKERCOMPOSE down
         echo ""
         ;;
 restart)
-	echo "stopping ..."
 	$0 stop
 	echo ""
 	echo "starting ..."
 	$0 start
 	;;
 pull)
-	docker-compose pull
+        echo "pulling new image..."
+	$DOCKERCOMPOSE pull
 	$0 stop
 	$0 start
 	;;
 status)
 	docker ps
 	echo "Logs actions: -----------------------"
-	docker-compose logs  -t
+	$DOCKERCOMPOSE logs  -t
 	;;
 *)
-	echo "$1 start / stop / status"
+	echo "$1 start / stop / status / pull / restart"
 	;;
 esac
 
