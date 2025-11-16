@@ -1,11 +1,40 @@
+# robots.txt
+# Stand: 2025-11 – optimiert für PmWiki mit Rewrite-URLs und UTF-8 Sitemap
+
 User-agent: *
-Disallow: /pmwiki.php/Main/AllRecentChanges
-Disallow: /pmwiki.php/
-Disallow: */search
-Disallow: SearchWiki
-Disallow: *RecentChanges
-Disallow: RecentChanges
-Disallow: *action=
-Disallow: action=
-User-Agent: W3C-checklink
-Disallow:
+
+# --- Erlaubte Inhalte ---
+Allow: /Main/
+Allow: /uploads/
+Allow: /pub/
+Allow: /local/
+Allow: /favicon.ico
+Allow: /sitemap.xml
+
+# --- Gesperrte dynamische und technische Bereiche ---
+Disallow: /pmwiki.php
+Disallow: /pmwiki.php?
+Disallow: /pmwiki.php?action=
+Disallow: /*?action=
+Disallow: /*action=
+Disallow: /*RecentChanges
+Disallow: /RecentChanges
+Disallow: /AllRecentChanges
+Disallow: /*search
+Disallow: /SearchWiki
+Disallow: /PmWiki
+Disallow: /wiki.d/
+Disallow: /scripts/
+Disallow: /cookbook/
+Disallow: /uploads/.thumbs/
+
+# --- Crawling-Parameter und Cache-Manipulationen verhindern ---
+Disallow: /*?nocache
+Disallow: /*?setskin=
+Disallow: /*?show=
+
+# --- Optional: Crawlrate steuern ---
+Crawl-delay: 5
+
+# --- Sitemap (absolut, UTF-8) ---
+#Sitemap: https://example.com/sitemap.xml
