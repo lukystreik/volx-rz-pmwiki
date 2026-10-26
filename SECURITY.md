@@ -1,21 +1,31 @@
 # Security Policy
 
-## Supported Versions
+## Supported versions
 
-which versions of the project are
-currently being supported with security updates.
+Unterstützt wird jeweils nur die **aktuelle PmWiki-Release** im Image-Tag `latest`
+(und der gleichnamige Versions-Tag). Ältere Tags bleiben auf Docker Hub liegen,
+bekommen aber keine Updates mehr – bitte auf `latest` wechseln.
 
-| Version | Supported          | cycle |
-| ------- | ------------------ | ----- |
-| 2.3.x   | :white_check_mark: | monthly build |
-| 1.x.x   | :x:                | - |
+Der folgende Block wird von der GitHub Action nach jedem erfolgreichen Build automatisch
+aktualisiert (siehe `.github/workflows/build.yml`). Nicht von Hand ändern.
 
-## Reporting a Vulnerability
+<!-- security-status:start -->
+<!-- security-status:end -->
 
-how to report a vulnerability.
+## Wie aktuell bleibt das Image?
 
-feel free to contact me on twitter or something else, if you have security concerns or need help
+* Die Action prüft **täglich** auf eine neue PmWiki-Release und baut dann sofort.
+* **Montags** wird immer neu gebaut, damit Ubuntu-, nginx- und PHP-Sicherheitsupdates ankommen.
+* Vor dem Push wird das Image mit [Trivy](https://trivy.dev) gescannt. Behebbare
+  CRITICAL-Funde verhindern die Veröffentlichung.
 
-# Contribution / Support
+## Reporting a vulnerability
 
-Contributors welcome
+Bitte **keine** öffentlichen Issues für Sicherheitslücken. Nutze stattdessen
+[GitHub Private Vulnerability Reporting](https://github.com/lukystreik/volx-rz-pmwiki/security/advisories/new)
+dieses Repositories. Schwachstellen in PmWiki selbst bitte zusätzlich an das
+[PmWiki-Projekt](https://www.pmwiki.org/wiki/PmWiki/Security) melden.
+
+## Contribution / Support
+
+Contributors welcome – siehe `AGENTS.md` für den technischen Aufbau.

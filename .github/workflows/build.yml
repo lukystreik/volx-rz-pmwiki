@@ -1,0 +1,183 @@
+name: build-pmwiki-image
+
+# Baut das Image regelmaessig neu, damit Ubuntu/PHP/nginx-Patches ankommen,
+# und sofort, wenn pmwiki.org eine neue Release veroeffentlicht.
+on:
+  schedule:
+    # taeglich 05:17 UTC: baut, wenn es eine neue PmWiki-Release gibt, und montags immer (OS-Patches)
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Build erzwingen, auch ohne neue Release'
+        type: boolean
+        default: true
+  push:
+    branches: [ main ]
+    paths:
+      - 'build/**'
+      - '.github/workflows/build.yml'
+      - '.github/scripts/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'build/**'
+      - '.github/workflows/build.yml'
+      - '.github/scripts/**'
+
+concurrency:
+  group: build-pmwiki-image-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  IMAGE: lukystreik/volx-rz-pmwiki
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # README.md / SECURITY.md zurueckcommitten
+    env:
+      PUBLISH: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect latest PmWiki release
+        id: ver
+        run: .github/scripts/detect-version.sh | tee -a "$GITHUB_OUTPUT"
+
+      - name: Decide whether to build
+        id: plan
+        run: |
+          build=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Montags immer (Betriebssystem-Patches), sonst nur bei neuer Release
+            if [ "$(date -u +%u)" != "1" ] && \
+               curl -fsS -o /dev/null "https://hub.docker.com/v2/repositories/${IMAGE}/tags/${{ steps.ver.outputs.PMWIKI_VERSION }}"; then
+              build=false
+            fi
+          fi
+          echo "build=$build" >> "$GITHUB_OUTPUT"
+          echo "build=$build (PmWiki ${{ steps.ver.outputs.PMWIKI_VERSION }})"
+
+      - name: Set up QEMU
+        if: steps.plan.outputs.build == 'true'
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        if: steps.plan.outputs.build == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        if: steps.plan.outputs.build == 'true' && env.PUBLISH == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker meta
+        if: steps.plan.outputs.build == 'true'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ steps.ver.outputs.PMWIKI_VERSION }}
+            type=raw,value=${{ steps.ver.outputs.PMWIKI_VERSION }}-{{date 'YYYYMMDD'}}
+          labels: |
+            org.opencontainers.image.version=${{ steps.ver.outputs.PMWIKI_VERSION }}
+
+      # 1) lokal bauen (amd64), damit vor dem Push gescannt werden kann
+      - name: Build (amd64, for scan)
+        if: steps.plan.outputs.build == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: build
+          load: true
+          pull: true
+          tags: pmwiki-scan:ci
+          build-args: |
+            PMWIKI_VERSION=${{ steps.ver.outputs.PMWIKI_VERSION }}
+            PMWIKI_SHA256=${{ steps.ver.outputs.PMWIKI_SHA256 }}
+          cache-to: type=gha,mode=max
+          cache-from: type=gha
+
+      - name: Trivy scan
+        if: steps.plan.outputs.build == 'true'
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: pmwiki-scan:ci
+          format: json
+          output: trivy.json
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH,MEDIUM,LOW
+          exit-code: '0'
+
+      - name: Collect image facts and gate on critical CVEs
+        if: steps.plan.outputs.build == 'true'
+        id: facts
+        run: |
+          count() { jq "[.Results[]?.Vulnerabilities[]? | select(.Severity==\"$1\")] | length" trivy.json; }
+          {
+            echo "ubuntu=$(docker run --rm --entrypoint sh pmwiki-scan:ci -c '. /etc/os-release && echo $VERSION_ID')"
+            echo "php=$(docker run --rm --entrypoint php pmwiki-scan:ci -r 'echo PHP_VERSION;')"
+            echo "nginx=$(docker run --rm --entrypoint nginx pmwiki-scan:ci -v 2>&1 | sed 's#.*/##')"
+            echo "critical=$(count CRITICAL)"
+            echo "high=$(count HIGH)"
+            echo "medium=$(count MEDIUM)"
+            echo "low=$(count LOW)"
+          } | tee -a "$GITHUB_OUTPUT"
+          if [ "$(count CRITICAL)" != "0" ]; then
+            echo "::error::Image enthaelt behebbare CRITICAL-Schwachstellen - kein Push."
+            exit 1
+          fi
+
+      # 2) multi-arch bauen und pushen (Layer kommen aus dem Cache)
+      - name: Build and push (amd64, arm64)
+        if: steps.plan.outputs.build == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: build
+          platforms: linux/amd64,linux/arm64
+          push: ${{ env.PUBLISH == 'true' }}
+          pull: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PMWIKI_VERSION=${{ steps.ver.outputs.PMWIKI_VERSION }}
+            PMWIKI_SHA256=${{ steps.ver.outputs.PMWIKI_SHA256 }}
+          cache-from: type=gha
+
+      - name: Update README.md and SECURITY.md
+        if: steps.plan.outputs.build == 'true' && env.PUBLISH == 'true'
+        run: |
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          .github/scripts/update-readme.sh "${{ steps.ver.outputs.PMWIKI_VERSION }}" "${{ steps.ver.outputs.PMWIKI_SHA256 }}" "$RUN_URL"
+          .github/scripts/update-security.sh \
+            "${{ steps.ver.outputs.PMWIKI_VERSION }}" "${{ steps.facts.outputs.ubuntu }}" \
+            "${{ steps.facts.outputs.php }}" "${{ steps.facts.outputs.nginx }}" \
+            "${{ steps.facts.outputs.critical }}" "${{ steps.facts.outputs.high }}" \
+            "${{ steps.facts.outputs.medium }}" "${{ steps.facts.outputs.low }}"
+          if ! git diff --quiet README.md SECURITY.md; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md SECURITY.md
+            git commit -m "docs: build ${{ steps.ver.outputs.PMWIKI_VERSION }} [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+  # GitHub deaktiviert Schedule-Trigger nach 60 Tagen ohne Repo-Aktivitaet.
+  # Das explizite Re-Enable setzt diesen Timer taeglich zurueck.
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Re-enable this workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/build.yml/enable"

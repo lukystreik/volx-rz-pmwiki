@@ -12,12 +12,13 @@ IMAGENAME ?= pmwiki:latest
 # Basisname ohne Tag
 IMAGE_BASE := $(shell echo $(IMAGENAME) | sed -e 's/:.*//')
 
-# PmWiki-Version dynamisch aus dem Web ermitteln
-PMWIKI_VERSION := $(shell wget --quiet http://www.pmwiki.org/pub/pmwiki/ -O- 2>/dev/null | grep 'pmwiki-' | egrep -v 'zip|patch|md5|latest' | sed -e 's/.*pmwiki-//' -e 's/<\/a.*//' -e 's/.tgz.*//' | sort -V | tail -1)
+# PmWiki-Version und Tarball-Pruefsumme dynamisch ermitteln (gleiches Skript wie in der CI)
+DETECT := $(shell ../.github/scripts/detect-version.sh 2>/dev/null)
+PMWIKI_VERSION := $(patsubst PMWIKI_VERSION=%,%,$(filter PMWIKI_VERSION=%,$(DETECT)))
+PMWIKI_SHA256  := $(patsubst PMWIKI_SHA256=%,%,$(filter PMWIKI_SHA256=%,$(DETECT)))
 
-# Fallback, falls leer
 ifeq ($(PMWIKI_VERSION),)
-  PMWIKI_VERSION := latest
+  $(error PmWiki-Version konnte nicht ermittelt werden - Netzwerk pruefen)
 endif
 
 STAMP := $(shell date '+%Y%m%d%H%M')
@@ -40,13 +41,15 @@ build:
 	@echo "  IMAGE_BASE      = $(IMAGE_BASE)"
 	@echo "  PMWIKI_VERSION  = $(PMWIKI_VERSION)"
 	DOCKER_BUILDKIT=1 docker build \
+		--build-arg PMWIKI_VERSION=$(PMWIKI_VERSION) \
+		--build-arg PMWIKI_SHA256=$(PMWIKI_SHA256) \
 		-t $(IMAGENAME) \
 		-t $(IMAGE_BASE):$(PMWIKI_VERSION) \
 		.
 
 scan:
 	@echo "Trivy-Scan für $(IMAGENAME)"
-	trivy image $(IMAGENAME) > trivy-scanresult-$(STAMP).txt
+	trivy image --ignore-unfixed $(IMAGENAME) > trivy-scanresult-$(STAMP).txt
 	@echo "Scan-Report: trivy-scanresult-$(STAMP).txt"
 
 push:
