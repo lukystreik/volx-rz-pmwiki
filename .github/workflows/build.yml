@@ -123,7 +123,7 @@ jobs:
           {
             echo "ubuntu=$(docker run --rm --entrypoint sh pmwiki-scan:ci -c '. /etc/os-release && echo $VERSION_ID')"
             echo "php=$(docker run --rm --entrypoint php pmwiki-scan:ci -r 'echo PHP_VERSION;')"
-            echo "nginx=$(docker run --rm --entrypoint nginx pmwiki-scan:ci -v 2>&1 | sed 's#.*/##')"
+            echo "nginx=$(docker run --rm --entrypoint nginx pmwiki-scan:ci -v 2>&1 | sed 's#.*/##; s# (Ubuntu)##')"
             echo "critical=$(count CRITICAL)"
             echo "high=$(count HIGH)"
             echo "medium=$(count MEDIUM)"
@@ -168,6 +168,18 @@ jobs:
             git pull --rebase origin main
             git push origin HEAD:main
           fi
+
+      # Docker Hub "Repository overview" = README.md (relative Links sind dort absolut gesetzt)
+      - name: Sync README to Docker Hub
+        if: steps.plan.outputs.build == 'true' && env.PUBLISH == 'true'
+        continue-on-error: true   # PAT braucht Read/Write/Delete-Scope fuer die Beschreibung
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ env.IMAGE }}
+          short-description: 'PmWiki on Ubuntu 26.04 + nginx + PHP-FPM – auto-rebuilt for every PmWiki release and weekly OS patches'
+          readme-filepath: README.md
 
   # GitHub deaktiviert Schedule-Trigger nach 60 Tagen ohne Repo-Aktivitaet.
   # Das explizite Re-Enable setzt diesen Timer taeglich zurueck.

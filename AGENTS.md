@@ -34,7 +34,8 @@ Read this file before changing anything. Keep it up to date when you change the 
 3. Build amd64 locally → Trivy scan (`ignore-unfixed`, JSON) → fail on any fixable CRITICAL → multi-arch build/push (`latest`, `X.Y.Z`, `X.Y.Z-YYYYMMDD`).
 4. Push to Docker Hub only from `main` and never for pull requests.
 5. Separate `keepalive` job (schedule only) re-enables the workflow daily – GitHub otherwise disables schedules after 60 days without repo activity.
-6. Update README.md/SECURITY.md and push a `docs: … [skip ci]` commit from `github-actions[bot]`.
+6. README.md is synced to the Docker Hub overview (peter-evans/dockerhub-description, needs a PAT with Read/Write/Delete scope; step is non-fatal). Therefore README links must be absolute URLs.
+7. Update README.md/SECURITY.md and push a `docs: … [skip ci]` commit from `github-actions[bot]`.
 
 Required repo setup: secrets `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`; Actions workflow permissions "Read and write"; if `main` is protected, allow the bot to push; enable "Private vulnerability reporting" (linked from SECURITY.md).
 

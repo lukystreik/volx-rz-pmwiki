@@ -20,7 +20,7 @@ PmWiki release and every week for operating-system security patches.
 | Workflow run | [Run](https://github.com/lukystreik/volx-rz-pmwiki/actions/runs/40248909490) |
 <!-- last-build:end -->
 
-Security details (base OS, PHP, nginx, scan results): see [SECURITY.md](SECURITY.md).
+Security details (base OS, PHP, nginx, scan results): see [SECURITY.md](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/SECURITY.md).
 
 ## Why this image
 
@@ -77,7 +77,7 @@ nginx site to `/etc/nginx/sites-enabled/default`, or a custom `php.ini` to `/etc
 ### Behind a reverse proxy
 
 The image trusts `X-Forwarded-For` from private networks (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`),
-see [build/nginx-realip.conf](build/nginx-realip.conf). If your proxy lives elsewhere, mount your own
+see [build/nginx-realip.conf](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/build/nginx-realip.conf). If your proxy lives elsewhere, mount your own
 file over `/etc/nginx/conf.d/nginx-realip.conf` with additional `set_real_ip_from` lines.
 Terminate TLS at the proxy and set `$ScriptUrl` in `local/config.php` to your public HTTPS URL.
 
@@ -98,12 +98,20 @@ Terminate TLS at the proxy and set `$ScriptUrl` in `local/config.php` to your pu
 
 ## How it is built
 
-* [`build/Dockerfile`](build/Dockerfile) – takes `PMWIKI_VERSION` (required) and `PMWIKI_SHA256` (optional) as build arguments.
-* [`.github/workflows/build.yml`](.github/workflows/build.yml) – the single pipeline: detect release → build → Trivy scan → multi-arch push → update this README and SECURITY.md. Runs daily, always on Mondays, on changes to `build/`, and on manual dispatch.
-* [`.github/scripts/`](.github/scripts) – release detection and documentation updates.
+* [`build/Dockerfile`](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/build/Dockerfile) – takes `PMWIKI_VERSION` (required) and `PMWIKI_SHA256` (optional) as build arguments.
+* [`.github/workflows/build.yml`](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/.github/workflows/build.yml) – the single pipeline: detect release → build → Trivy scan → multi-arch push → update this README and SECURITY.md. Runs daily, always on Mondays, on changes to `build/`, and on manual dispatch.
+* [`.github/scripts/`](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/.github/scripts) – release detection and documentation updates.
 * Local build: `cd build && make build` (needs Docker and network access). `make scan` runs Trivy, `make run` starts a local container.
 
-The repository secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are required for publishing.
+The repository secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are required for publishing. This README is also synced to the Docker Hub repository overview after each build.
+
+## Migrating content from PmWiki 1.x (ISO-8859-1)
+
+```bash
+apt-get update && apt-get install convmv
+unset LC_ALL
+convmv -f iso-8859-15 -t utf-8 --notest *
+```
 
 ## Version history
 
@@ -135,10 +143,10 @@ The repository secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are required f
 ## Contributing
 
 Issues and pull requests are welcome. Changes to the build are tested by the pipeline on every pull request (build and scan, no publish).
-Maintainers and AI agents: read [AGENTS.md](AGENTS.md) first.
+Maintainers and AI agents: read [AGENTS.md](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/AGENTS.md) first.
 
 ## Links
 
 * PmWiki: <https://www.pmwiki.org/wiki/PmWiki/Download>
 * Docker Hub: <https://hub.docker.com/r/lukystreik/volx-rz-pmwiki>
-* Security policy: [SECURITY.md](SECURITY.md)
+* Security policy: [SECURITY.md](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/SECURITY.md)
