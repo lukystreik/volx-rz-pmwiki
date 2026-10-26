@@ -22,7 +22,7 @@ The block below is updated automatically by the GitHub Action after every succes
 | Base operating system | Ubuntu 26.04 LTS |
 | PHP | 8.5.4 |
 | nginx | 1.28.3 |
-| Last build / scan | 26.10.2026 00:42 UTC |
+| Last build / scan | 26.10.2026 00:55 UTC |
 | Trivy findings (with available fix) | CRITICAL: 0 · HIGH: 4 · MEDIUM: 9 · LOW: 1 |
 <!-- security-status:end -->
 
