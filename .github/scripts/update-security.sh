@@ -9,12 +9,12 @@ FILE="${SECURITY_FILE:-SECURITY.md}"
 
 block="| | |
 | :---- | :---- |
-| Unterstützte PmWiki-Version | **${VERSION}** (Tags \`latest\`, \`${VERSION}\`) |
-| Basis-Betriebssystem | Ubuntu ${UBUNTU} LTS |
+| Supported PmWiki version | **${VERSION}** (Tags \`latest\`, \`${VERSION}\`) |
+| Base operating system | Ubuntu ${UBUNTU} LTS |
 | PHP | ${PHP} |
 | nginx | ${NGINX} |
-| Letzter Build / Scan | $(date -u '+%d.%m.%Y %H:%M') UTC |
-| Trivy-Funde (mit verfügbarem Fix) | CRITICAL: ${CRIT} · HIGH: ${HIGH} · MEDIUM: ${MED} · LOW: ${LOW} |"
+| Last build / scan | $(date -u '+%d.%m.%Y %H:%M') UTC |
+| Trivy findings (with available fix) | CRITICAL: ${CRIT} · HIGH: ${HIGH} · MEDIUM: ${MED} · LOW: ${LOW} |"
 
 tmp=$(mktemp)
 BLOCK="$block" awk '

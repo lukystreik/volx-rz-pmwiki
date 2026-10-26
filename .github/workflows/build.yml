@@ -31,12 +31,14 @@ concurrency:
 
 env:
   IMAGE: lukystreik/volx-rz-pmwiki
+  GHCR_IMAGE: ghcr.io/lukystreik/volx-rz-pmwiki
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write   # README.md / SECURITY.md zurueckcommitten
+      packages: write   # Push nach ghcr.io
     env:
       PUBLISH: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
     steps:
@@ -76,12 +78,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Login to GHCR
+        if: steps.plan.outputs.build == 'true' && env.PUBLISH == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Docker meta
         if: steps.plan.outputs.build == 'true'
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.IMAGE }}
+          images: |
+            ${{ env.IMAGE }}
+            ${{ env.GHCR_IMAGE }}
           tags: |
             type=raw,value=latest
             type=raw,value=${{ steps.ver.outputs.PMWIKI_VERSION }}
@@ -129,6 +141,7 @@ jobs:
             echo "medium=$(count MEDIUM)"
             echo "low=$(count LOW)"
           } | tee -a "$GITHUB_OUTPUT"
+          .github/scripts/check-advisories.sh pmwiki-scan:ci | tee news.md
           if [ "$(count CRITICAL)" != "0" ]; then
             echo "::error::Image enthaelt behebbare CRITICAL-Schwachstellen - kein Push."
             exit 1
@@ -160,6 +173,7 @@ jobs:
             "${{ steps.facts.outputs.php }}" "${{ steps.facts.outputs.nginx }}" \
             "${{ steps.facts.outputs.critical }}" "${{ steps.facts.outputs.high }}" \
             "${{ steps.facts.outputs.medium }}" "${{ steps.facts.outputs.low }}"
+          .github/scripts/update-news.sh news.md
           if ! git diff --quiet README.md SECURITY.md; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

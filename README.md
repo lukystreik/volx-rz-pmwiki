@@ -8,6 +8,30 @@ A ready-to-run [PmWiki](https://www.pmwiki.org/) image on **Ubuntu 26.04 LTS**, 
 nobody else keeps a current one on Docker Hub – so this project does: it rebuilds automatically for every new
 PmWiki release and every week for operating-system security patches.
 
+## Security news
+
+<!-- news:start -->
+* ✅ **CVE-2026-109618** – PHP: out-of-memory handling can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.5`).
+* ✅ **CVE-2026-109619** – PHP: stale request-memory state can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.5`).
+<!-- news:end -->
+
+## Container registries
+
+The image is published to two public registries – pull from whichever suits you:
+
+| Registry | Image | Link |
+| :---- | :---- | :---- |
+| **Docker Hub** | `lukystreik/volx-rz-pmwiki` | <https://hub.docker.com/r/lukystreik/volx-rz-pmwiki> |
+| **GitHub Container Registry (GHCR)** | `ghcr.io/lukystreik/volx-rz-pmwiki` | <https://github.com/lukystreik/volx-rz-pmwiki/pkgs/container/volx-rz-pmwiki> |
+
+```bash
+docker pull lukystreik/volx-rz-pmwiki:latest
+# or
+docker pull ghcr.io/lukystreik/volx-rz-pmwiki:latest
+```
+
+Both registries carry identical images and tags.
+
 ## Latest build
 
 <!-- last-build:start -->

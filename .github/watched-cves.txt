@@ -1,0 +1,6 @@
+# CVEs that are shown in the "Security news" line of README.md / SECURITY.md.
+# Format: CVE-ID | short description
+# On every build the pipeline checks the freshly built image: a CVE counts as addressed
+# if the changelog of an installed package mentions it. Remove old entries when they are no longer news.
+CVE-2026-109618 | PHP: out-of-memory handling can lead to remote code execution
+CVE-2026-109619 | PHP: stale request-memory state can lead to remote code execution
