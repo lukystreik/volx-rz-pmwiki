@@ -10,6 +10,14 @@ Der folgende Block wird von der GitHub Action nach jedem erfolgreichen Build aut
 aktualisiert (siehe `.github/workflows/build.yml`). Nicht von Hand ändern.
 
 <!-- security-status:start -->
+| | |
+| :---- | :---- |
+| Unterstützte PmWiki-Version | **2.7.8** (Tags `latest`, `2.7.8`) |
+| Basis-Betriebssystem | Ubuntu 26.04 LTS |
+| PHP | 8.5.4 |
+| nginx | 1.28.3 (Ubuntu) |
+| Letzter Build / Scan | 26.10.2026 00:32 UTC |
+| Trivy-Funde (mit verfügbarem Fix) | CRITICAL: 0 · HIGH: 4 · MEDIUM: 9 · LOW: 1 |
 <!-- security-status:end -->
 
 ## Wie aktuell bleibt das Image?

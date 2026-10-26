@@ -11,6 +11,13 @@ PmWiki release and every week for operating-system security patches.
 ## Latest build
 
 <!-- last-build:start -->
+| | |
+| :---- | :---- |
+| Last build | 26.10.2026 00:32 UTC |
+| PmWiki version | 2.7.8 |
+| Image | `lukystreik/volx-rz-pmwiki:2.7.8` |
+| PmWiki tarball SHA-256 | `2c159a64c7323d32ea000395c374ffa7d53a7c352b3bb6aa04a62005dd8c1ee1` |
+| Workflow run | [Run](https://github.com/lukystreik/volx-rz-pmwiki/actions/runs/40248909490) |
 <!-- last-build:end -->
 
 Security details (base OS, PHP, nginx, scan results): see [SECURITY.md](SECURITY.md).
@@ -102,6 +109,7 @@ The repository secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are required f
 
 | Version | Date |
 | :---- | :-------- |
+| 2.7.8 | 26.10.2026 |
 | 2.5.9 | 05.04.2026 |
 | 2.5.2 | 14.09.2025 |
 | 2.3.38 | 03.11.2024 |
