@@ -183,6 +183,17 @@ jobs:
             git push origin HEAD:main
           fi
 
+      - name: Create GitHub release (once per PmWiki version)
+        if: steps.plan.outputs.build == 'true' && env.PUBLISH == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .github/scripts/create-release.sh \
+            "${{ steps.ver.outputs.PMWIKI_VERSION }}" "${{ steps.facts.outputs.ubuntu }}" \
+            "${{ steps.facts.outputs.php }}" "${{ steps.facts.outputs.nginx }}" \
+            "${{ steps.facts.outputs.critical }}" "${{ steps.facts.outputs.high }}" \
+            "${{ steps.facts.outputs.medium }}" "${{ steps.facts.outputs.low }}" news.md
+
       # Docker Hub "Repository overview" = README.md (relative Links sind dort absolut gesetzt)
       - name: Sync README to Docker Hub
         if: steps.plan.outputs.build == 'true' && env.PUBLISH == 'true'
