@@ -22,8 +22,8 @@ The block below is updated automatically by the GitHub Action after every succes
 | Base operating system | Ubuntu 26.04 LTS |
 | PHP | 8.5.4 |
 | nginx | 1.28.3 |
-| Last build / scan | 26.10.2026 11:16 UTC |
-| Trivy findings (with available fix) | CRITICAL: 0 · HIGH: 4 · MEDIUM: 9 · LOW: 1 |
+| Last build / scan | 02.11.2026 13:44 UTC |
+| Trivy findings (with available fix) | CRITICAL: 0 · HIGH: 0 · MEDIUM: 0 · LOW: 0 |
 <!-- security-status:end -->
 
 ## How current does the image stay?
