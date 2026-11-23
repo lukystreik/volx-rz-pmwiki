@@ -11,8 +11,8 @@ PmWiki release and every week for operating-system security patches.
 ## Security news
 
 <!-- news:start -->
-* ✅ **CVE-2026-109618** – PHP: out-of-memory handling can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.5`).
-* ✅ **CVE-2026-109619** – PHP: stale request-memory state can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.5`).
+* ✅ **CVE-2026-109618** – PHP: out-of-memory handling can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.6`).
+* ✅ **CVE-2026-109619** – PHP: stale request-memory state can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.6`).
 <!-- news:end -->
 
 ## Container registries
@@ -37,11 +37,11 @@ Both registries carry identical images and tags.
 <!-- last-build:start -->
 | | |
 | :---- | :---- |
-| Last build | 02.11.2026 13:44 UTC |
+| Last build | 23.11.2026 16:09 UTC |
 | PmWiki version | 2.7.8 |
 | Image | `lukystreik/volx-rz-pmwiki:2.7.8` |
 | PmWiki tarball SHA-256 | `2c159a64c7323d32ea000395c374ffa7d53a7c352b3bb6aa04a62005dd8c1ee1` |
-| Workflow run | [Run](https://github.com/lukystreik/volx-rz-pmwiki/actions/runs/41453834164) |
+| Workflow run | [Run](https://github.com/lukystreik/volx-rz-pmwiki/actions/runs/45211479601) |
 <!-- last-build:end -->
 
 Security details (base OS, PHP, nginx, scan results): see [SECURITY.md](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/SECURITY.md).

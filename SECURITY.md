@@ -3,8 +3,8 @@
 ## Security news
 
 <!-- news:start -->
-* ✅ **CVE-2026-109618** – PHP: out-of-memory handling can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.5`).
-* ✅ **CVE-2026-109619** – PHP: stale request-memory state can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.5`).
+* ✅ **CVE-2026-109618** – PHP: out-of-memory handling can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.6`).
+* ✅ **CVE-2026-109619** – PHP: stale request-memory state can lead to remote code execution. **Addressed** in this image (`php8.5-cli 8.5.4-0ubuntu1.6`).
 <!-- news:end -->
 
 ## Supported versions
@@ -22,8 +22,8 @@ The block below is updated automatically by the GitHub Action after every succes
 | Base operating system | Ubuntu 26.04 LTS |
 | PHP | 8.5.4 |
 | nginx | 1.28.3 |
-| Last build / scan | 02.11.2026 13:44 UTC |
-| Trivy findings (with available fix) | CRITICAL: 0 · HIGH: 0 · MEDIUM: 0 · LOW: 0 |
+| Last build / scan | 23.11.2026 16:09 UTC |
+| Trivy findings (with available fix) | CRITICAL: 0 · HIGH: 0 · MEDIUM: 1 · LOW: 0 |
 <!-- security-status:end -->
 
 ## How current does the image stay?
