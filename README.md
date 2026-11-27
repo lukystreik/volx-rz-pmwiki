@@ -37,11 +37,11 @@ Both registries carry identical images and tags.
 <!-- last-build:start -->
 | | |
 | :---- | :---- |
-| Last build | 25.11.2026 15:48 UTC |
-| PmWiki version | 2.7.9 |
-| Image | `lukystreik/volx-rz-pmwiki:2.7.9` |
-| PmWiki tarball SHA-256 | `8f42a69ff4f7764d154f7eca813a42c26e010476678e354c37e0dad50b600cc1` |
-| Workflow run | [Run](https://github.com/lukystreik/volx-rz-pmwiki/actions/runs/45647372171) |
+| Last build | 27.11.2026 15:22 UTC |
+| PmWiki version | 2.7.10 |
+| Image | `lukystreik/volx-rz-pmwiki:2.7.10` |
+| PmWiki tarball SHA-256 | `420eceeccf73aee2eaa70770f2f95ae300a7485696c47c0628dfb33054da003c` |
+| Workflow run | [Run](https://github.com/lukystreik/volx-rz-pmwiki/actions/runs/46022069069) |
 <!-- last-build:end -->
 
 Security details (base OS, PHP, nginx, scan results): see [SECURITY.md](https://github.com/lukystreik/volx-rz-pmwiki/blob/main/SECURITY.md).
@@ -141,6 +141,7 @@ convmv -f iso-8859-15 -t utf-8 --notest *
 
 | Version | Date |
 | :---- | :-------- |
+| 2.7.10 | 27.11.2026 |
 | 2.7.9 | 25.11.2026 |
 | 2.7.8 | 26.10.2026 |
 | 2.5.9 | 05.04.2026 |

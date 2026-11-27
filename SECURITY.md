@@ -18,11 +18,11 @@ The block below is updated automatically by the GitHub Action after every succes
 <!-- security-status:start -->
 | | |
 | :---- | :---- |
-| Supported PmWiki version | **2.7.9** (Tags `latest`, `2.7.9`) |
+| Supported PmWiki version | **2.7.10** (Tags `latest`, `2.7.10`) |
 | Base operating system | Ubuntu 26.04 LTS |
 | PHP | 8.5.4 |
 | nginx | 1.28.3 |
-| Last build / scan | 25.11.2026 15:48 UTC |
+| Last build / scan | 27.11.2026 15:22 UTC |
 | Trivy findings (with available fix) | CRITICAL: 0 · HIGH: 0 · MEDIUM: 1 · LOW: 0 |
 <!-- security-status:end -->
 
